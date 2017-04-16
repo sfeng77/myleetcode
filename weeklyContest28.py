@@ -8,22 +8,7 @@ class Solution():
         :type s: str
         :rtype: bool
         """
-        countA = 0
-        countL = 0
-        for c in s:
-            if c == "A":
-                countL = 0
-                countA += 1
-                if countA >= 2:
-                    return False
-            if c == "L":
-                if countL < 2:
-                    countL += 1
-                else:
-                    return False
-            else:
-                countL = 0
-        return True
+        return s.count("A") < 2 and "LLL" not in s
 
     def optimalDivision(self, nums):
         """
