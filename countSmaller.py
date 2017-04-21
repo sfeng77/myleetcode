@@ -1,4 +1,6 @@
-# You are given an integer array nums and you have to return a new counts array. The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].
+# You are given an integer array nums and you have to return a new counts array
+# The counts array has the property where counts[i] is the number of smaller
+# elements to the right of nums[i].
 #
 # Example:
 #
@@ -9,37 +11,22 @@
 # To the right of 6 there is 1 smaller element (1).
 # To the right of 1 there is 0 smaller element.
 # Return the array [2, 1, 1, 0].
+
+
 class Solution(object):
     def countSmaller(self, nums):
         """
         :type nums: List[int]
         :rtype: List[int]
         """
-
-
-        l = []
-
-        for val in nums:
-            idx = self.binarySearch(l, val)
-            if l[idx] != val:
-                l = l[:idx] + [val] + l[idx:]
-
-                d = {}
-                res = [0] * len(nums)
-                for i in range(len(nums), -1, -1):
-                    val = nums[i]
-                    res[i]= d.get(val, 0)
-                    idx = self.binarySearch(l, val)
-
-    def binarySearch(self, nums, val):
-        l = 0
-        r = len(nums) - 1
-        while(l <= r):
-            mid = l + (r - l) / 2
-            if nums[mid] < val:
-                l = mid + 1
-            elif nums[mid] > val:
-                r = mid - 1
-            else:
-                return mid
-        return l
+        import bisect
+        vals = []
+        n = len(nums)
+        if n == 0:
+            return []
+        smaller = [0] * n
+        for i in range(n - 1, -1, -1):
+            j = bisect.bisect_left(vals, nums[i])
+            smaller[i] = j
+            vals.insert(j, nums[i])
+        return smaller
